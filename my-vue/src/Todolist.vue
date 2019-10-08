@@ -8,7 +8,7 @@
       <li
         :class="{'done':todo.done}"
         @click="toggle(index)"
-      
+        :key="index"
         v-for="(todo,index) in todos"
       >{{index+1}}:{{todo.text}}</li>
     </ul>
@@ -17,22 +17,22 @@
 </template>
 
 <script>
-import Title from "./components/Title"
+import Title from './components/Title'
 export default {
   components: {
     Title
   },
-  data() {
+  data () {
     return {
-      title: "hello vuejs",
-      subtitle: "vuejs is good",
-      mytodo: "",
+      title: 'hello vuejs',
+      subtitle: 'vuejs is good',
+      mytodo: '',
       todos: [
-        { text: "吃饭", done: false },
-        { text: "睡觉", done: false },
-        { text: "写代码", done: false }
+        { text: '吃饭', done: false },
+        { text: '睡觉', done: false },
+        { text: '写代码', done: false }
       ]
-    };
+    }
   },
   computed: {
     reamins () {
@@ -41,12 +41,12 @@ export default {
   },
   methods: {
     handleClick () {
-      if (this.mytodo != "") {
+      if (this.mytodo !== '') {
         this.todos.push({
           text: this.mytodo,
           done: false
-        });
-        this.mytodo = ""
+        })
+        this.mytodo = ''
       }
     },
     toggle (i) {
@@ -60,7 +60,7 @@ export default {
 </script>
 
 <style>
-li.done{
+li.done {
   text-decoration: line-through;
   color: red;
 }
