@@ -1,62 +1,78 @@
 <template>
   <div>
-    <Title :title="title" :subtitle="subtitle"></Title>
-    <input @keyup.enter="handleClick" type="text" v-model="mytodo" />
-    <button @click="handleClick">添加</button>
-    <button @click="deldone">清空</button>
-    <ul>
-      <li
-        :class="{'done':todo.done}"
-        @click="toggle(index)"
-        :key="index"
-        v-for="(todo,index) in todos"
-      >{{index+1}}:{{todo.text}}</li>
-    </ul>
-    <p>{{reamins}}/{{todos.length}}</p>
+    <input @keyup.enter="cus_add" v-model="mycus" type="text" />
+    <button @click="cus_add">添加</button>
+    <table>
+      <thead>
+        <tr>
+          <td>
+            <input @change="ck_all" type="checkbox"/>
+          </td>
+          <td>编号</td>
+          <td>名称</td>
+          <td>地址</td>
+          <td>操作</td>
+        </tr>
+      </thead>
+      <tbody :key="i" v-for="(cus,i) in customers">
+        <tr>
+          <td>
+            <input type="checkbox" />
+          </td>
+          <td>{{cus.number}}</td>
+          <td>{{cus.name}}</td>
+          <td>{{cus.address}}</td>
+          <td>
+            <a @click="cus_update(i)" href="javascript:;">修改</a>
+            <a @click="cus_delete(i)" href="javascript:;">删除</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>{{customers.length}}</p>
   </div>
 </template>
 
 <script>
-import Title from './components/Title'
 export default {
-  components: {
-    Title
-  },
-  data () {
+  data() {
     return {
-      title: 'hello vuejs',
-      subtitle: 'vuejs is good',
-      mytodo: '',
-      todos: [
-        { text: '吃饭', done: false },
-        { text: '睡觉', done: false },
-        { text: '写代码', done: false }
+      mycus: "",
+      customers: [
+        {
+          number: "KH001",
+          name: "晨希",
+          address: "市区"
+        },
+        {
+          number: "KH001",
+          name: "晨希",
+          address: "市区"
+        }
       ]
-    }
-  },
-  computed: {
-    reamins () {
-      return this.todos.filter(v => !v.done).length
-    }
+    };
   },
   methods: {
-    handleClick () {
-      if (this.mytodo !== '') {
-        this.todos.push({
-          text: this.mytodo,
-          done: false
-        })
-        this.mytodo = ''
-      }
+    cus_add() {
+      if (this.mycus === "") return;
+      this.customers.push({
+        number: "KH001",
+        name: this.mycus,
+        address: "市区"
+      });
+      this.mycus = "";
     },
-    toggle (i) {
-      this.todos[i].done = !this.todos[i].done
+    cus_update(i) {
+      console.log("正在修改" + this.customers[i].name);
     },
-    deldone () {
-      this.todos = this.todos.filter(v => !v.done)
+    cus_delete(i) {
+      this.customers.splice(i, 1);
+    },
+    ck_all(){
+      console.log(this)
     }
   }
-}
+};
 </script>
 
 <style>
